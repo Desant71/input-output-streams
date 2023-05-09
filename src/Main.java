@@ -8,11 +8,11 @@ public class Main {
         String[] products = {"Хлеб", "Яблоки", "Молоко"};
         int[] prices = {100, 200, 300};
 
-        File safeFile = new File("basket.txt");
+        File safeFile = new File("basket.bin");
 
         Basket basket = null;
         if (safeFile.exists()){
-            basket = Basket.loadFromTxtFile(safeFile);
+            basket = Basket.loadFromBinFile(safeFile);
         }else {
             basket = new Basket(products, prices);
         }
@@ -36,7 +36,7 @@ public class Main {
             int currentPrice = prices[productNumber];//текущая цена продукта
             int sumProducts = currentPrice * productCount;// сумма выбранных продуктов
             basket.addToCart(productNumber, productCount);
-            basket.saveTxt(safeFile);
+            basket.saveBin(safeFile);
 
             productBasket[productNumber] += productCount;// увеличиваем кол-во товара
             prices2[productNumber] += sumProducts;// увеличиваем суммы товаров
