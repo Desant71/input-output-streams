@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.Scanner;
 
 public class Main {
@@ -6,6 +7,15 @@ public class Main {
         System.out.println("Список товаров для покупки: ");
         String[] products = {"Хлеб", "Яблоки", "Молоко"};
         int[] prices = {100, 200, 300};
+
+        File safeFile = new File("basket.txt");
+
+        Basket basket = null;
+        if (safeFile.exists()){
+            basket = Basket.loadFromTxtFile(safeFile);
+        }else {
+            basket = new Basket(products, prices);
+        }
 
         for (int i = 0; i < products.length; i++) {
             System.out.println((i + 1) + "." + products[i] + "  " + prices[i] + "  " + "шт/руб.");
@@ -25,6 +35,8 @@ public class Main {
             int productCount = Integer.parseInt(clientChoice[1]);// кол-во продукта
             int currentPrice = prices[productNumber];//текущая цена продукта
             int sumProducts = currentPrice * productCount;// сумма выбранных продуктов
+            basket.addToCart(productNumber, productCount);
+            basket.saveTxt(safeFile);
 
             productBasket[productNumber] += productCount;// увеличиваем кол-во товара
             prices2[productNumber] += sumProducts;// увеличиваем суммы товаров
